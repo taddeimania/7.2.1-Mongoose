@@ -15,4 +15,4 @@ mongoose.connect("mongodb://localhost:27017/mongoosestore");
 app.get("/", recipeController.list);
 
 
-app.listen(3000);
+app.listen(process.env.PORT || 3000);
