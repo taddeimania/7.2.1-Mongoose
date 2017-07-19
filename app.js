@@ -10,7 +10,17 @@ app.set('view engine', 'mustache');
 app.set('views', './views');
 
 mongoose.Promise = require("bluebird");
-mongoose.connect("mongodb://localhost:27017/mongoosestore");
+
+const environment = process.env.NODE_ENV || "development";
+let mongoURL;
+
+if (environment === "production") {
+  mongoURL = process.env.MONGODB_URI;
+} else {
+  mongoURL = require("./config.json")[environment].mongoURL;
+}
+
+mongoose.connect(mongoURL);
 
 app.get("/", recipeController.list);
 
